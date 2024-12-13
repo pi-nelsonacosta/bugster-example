@@ -6,23 +6,6 @@
 
 ---
 
-## Tabla de Contenidos
-
-1. [Características Principales](#características-principales)
-2. [Requisitos Previos](#requisitos-previos)
-3. [Instalación](#instalación)
-4. [Ejecución del Proyecto](#ejecución-del-proyecto)
-5. [Estructura del Proyecto](#estructura-del-proyecto)
-6. [Endpoints de la API](#endpoints-de-la-api)
-7. [Base de Datos](#base-de-datos)
-8. [Ejemplo de Uso](#ejemplo-de-uso)
-9. [Decisiones de Diseño](#decisiones-de-diseño)
-10. [Trade-offs Considerados](#trade-offs-considerados)
-11. [Áreas de Mejora](#áreas-de-mejora)
-12. [Despliegue con Docker](#despliegue-con-docker)
-
----
-
 ## Características Principales 🛠️
 
 1. **Recepción de Eventos**:
@@ -63,8 +46,8 @@
 Clona el repositorio del proyecto:
 
 ```bash
-git clone https://github.com/tu-usuario/bugster-api.git
-cd bugster-api
+git clone https://github.com/pi-nelsonacosta/bugster-example.git
+cd bugster-example
 ```
 
 Instala las dependencias y descarga los navegadores:
@@ -79,21 +62,6 @@ Inicia el servidor de desarrollo:
 ```bash
 uvicorn main:app --reload
 ```
-
-## Ejecución del Proyecto
-Usando Docker:
-
-```bash
-docker-compose up
-```
-
-Usando Python:
-Para ejecutar el proyecto en producción, ejecuta el siguiente comando:
-
-```bash
-uvicorn main:app
-```
-
 ## Despliegue con Docker
 
 Para desplegar el proyecto con Docker, sigue los siguientes pasos:
@@ -104,28 +72,18 @@ Para desplegar el proyecto con Docker, sigue los siguientes pasos:
 
 
 ```bash
-docker-compose build
+cd docker/develop
+docker-compose up --build
+
 ```
 
-4. Ejecuta el siguiente comando para iniciar el servidor de desarrollo:
-
-```bash
-docker-compose up
-```
-
-5. Abre una nueva terminal y ejecuta el siguiente comando para iniciar el servidor de producción: 
-
-```bash
-docker-compose up -d
-```
-
-6. Para verificar que el servidor de producción está funcionando, puedes ejecutar el siguiente comando en la terminal:
+. Para verificar que el servidor de producción está funcionando, puedes ejecutar el siguiente comando en la terminal:
 
 ```bash
 docker-compose ps
 ```
 
-7. Si todo está funcionando correctamente, deberías ver un mensaje similar al siguiente:
+. Si todo está funcionando correctamente, deberías ver un mensaje similar al siguiente:
 
 ```
       Name                     Command               State           Ports
@@ -133,11 +91,32 @@ docker-compose ps
 bugster-api_bugster-api_1   uvicorn main:app       Up      0.0.0.0:8000->8000/tcp
 ```
 
-8. Para detener el servidor de producción, puedes ejecutar el siguiente comando en la terminal:
+. Para detener el servidor de producción, puedes ejecutar el siguiente comando en la terminal:
 
 ```bash
 docker-compose down
 ```
+
+## Estructura del Proyecto 📂
+
+bugster-api/
+│-- app/
+│   ├── api/
+│   │   └── routers/
+│   │       └── events.py          # Endpoints de la API
+│   ├── db/
+│   │   └── repository/
+│   │       └── event_repository.py  # Funciones de base de datos
+│   ├── schemas/
+│   │   └── event.py               # Esquemas Pydantic
+│   └── services/
+│       └── event_service.py       # Lógica de negocio
+│-- docker/
+│   └── develop/
+│       └── Dockerfile             # Dockerfile para desarrollo
+│-- main.py                        # Punto de entrada de FastAPI
+│-- requirements.txt               # Dependencias del proyecto
+└-- README.md                      # Documentación del proyecto
 
 ## Decisiones de Diseño
 
@@ -174,3 +153,13 @@ El diseño de Bugster API tiene como objetivo capturar eventos de interacción d
   * Seguridad: Implementar autenticación y autorización en los endpoints.
   * Mejora de Logs: Añadir más detalles en los logs para facilitar el debugging.
   * Pruebas Unitarias: Aumentar la cobertura de pruebas unitarias para garantizar la estabilidad del código.
+
+## Para contribuir al proyecto
+
+1. Fork el repositorio.
+2. Crea una nueva rama con tus cambios.
+3. Envía un pull request al repositorio.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Para más información, consulta el archivo [LICENSE](LICENSE).
