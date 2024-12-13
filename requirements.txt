@@ -1,5 +1,7 @@
 fastapi
 uvicorn
 pydantic
-requests
-httpx
+playwright
+pymongo
+motor
+pytest

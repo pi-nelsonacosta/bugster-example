@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  bugster-api:
+    build:
+      context: ../..
+      dockerfile: docker/develop/Dockerfile
+    container_name: bugster-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../..:/app
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/bugster_db
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
